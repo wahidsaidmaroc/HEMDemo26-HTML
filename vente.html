@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Malak Shop - Boutique en ligne</title>
+
+    <style>
+        /* ===============================
+           1. VARIABLES ET STYLE GÉNÉRAL
+        =============================== */
+
+        :root {
+            --couleur-principale: #7c3aed;
+            --couleur-secondaire: #ec4899;
+            --couleur-foncee: #1f2937;
+            --couleur-claire: #f8fafc;
+            --couleur-grise: #64748b;
+            --couleur-verte: #16a34a;
+            --couleur-rouge: #dc2626;
+            --couleur-blanche: #ffffff;
+            --ombre: 0 10px 30px rgba(0, 0, 0, 0.10);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: var(--couleur-claire);
+            color: var(--couleur-foncee);
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* ===============================
+           2. BARRE DE NAVIGATION
+        =============================== */
+
+        .navigation {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+
+            padding: 18px 7%;
+            background-color: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: var(--couleur-principale);
+        }
+
+        .logo span {
+            color: var(--couleur-secondaire);
+        }
+
+        .liens-navigation {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .liens-navigation a {
+            text-decoration: none;
+            color: var(--couleur-foncee);
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .liens-navigation a:hover {
+            color: var(--couleur-principale);
+        }
+
+        .bouton-panier {
+            position: relative;
+
+            border: none;
+            border-radius: 12px;
+            padding: 11px 16px;
+
+            color: white;
+            background: linear-gradient(
+                135deg,
+                var(--couleur-principale),
+                var(--couleur-secondaire)
+            );
+
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .nombre-panier {
+            position: absolute;
+            top: -9px;
+            right: -9px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            min-width: 23px;
+            height: 23px;
+            padding: 3px;
+
+            border-radius: 50%;
+            background-color: var(--couleur-rouge);
+            color: white;
+            font-size: 12px;
+        }
+
+        /* ===============================
+           3. SECTION D'ACCUEIL
+        =============================== */
+
+        .accueil {
+            min-height: 520px;
+            padding: 80px 7%;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 50px;
+
+            color: white;
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(255, 255, 255, 0.25),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #4c1d95,
+                    #7c3aed,
+                    #ec4899
+                );
+        }
+
+        .accueil-contenu h1 {
+            max-width: 650px;
+            margin-bottom: 20px;
+            font-size: clamp(38px, 5vw, 70px);
+            line-height: 1.05;
+        }
+
+        .accueil-contenu p {
+            max-width: 600px;
+            margin-bottom: 30px;
+            font-size: 19px;
+            line-height: 1.7;
+            color: #f5f3ff;
+        }
+
+        .bouton-principal {
+            display: inline-block;
+            padding: 15px 25px;
+
+            border: none;
+            border-radius: 12px;
+
+            background-color: white;
+            color: var(--couleur-principale);
+
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .bouton-principal:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--ombre);
+        }
+
+        .illustration-accueil {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carte-promotion {
+            width: 360px;
+            padding: 35px;
+
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+
+            text-align: center;
+            box-shadow: var(--ombre);
+            transform: rotate(3deg);
+        }
+
+        .icone-promotion {
+            margin-bottom: 20px;
+            font-size: 90px;
+        }
+
+        .carte-promotion h2 {
+            margin-bottom: 12px;
+            font-size: 30px;
+        }
+
+        .carte-promotion p {
+            font-size: 18px;
+        }
+
+        /* ===============================
+           4. AVANTAGES
+        =============================== */
+
+        .avantages {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+
+            padding: 40px 7%;
+            background-color: white;
+        }
+
+        .avantage {
+            padding: 25px;
+            border-radius: 18px;
+            background-color: #f8fafc;
+            text-align: center;
+        }
+
+        .avantage .icone {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 35px;
+        }
+
+        .avantage h3 {
+            margin-bottom: 8px;
+        }
+
+        .avantage p {
+            color: var(--couleur-grise);
+            line-height: 1.5;
+        }
+
+        /* ===============================
+           5. SECTION PRODUITS
+        =============================== */
+
+        .section-produits {
+            padding: 70px 7%;
+        }
+
+        .titre-section {
+            margin-bottom: 12px;
+            text-align: center;
+            font-size: 38px;
+        }
+
+        .description-section {
+            margin-bottom: 35px;
+            text-align: center;
+            color: var(--couleur-grise);
+        }
+
+        .outils-produits {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+
+            margin-bottom: 35px;
+        }
+
+        .outils-produits input,
+        .outils-produits select {
+            min-width: 220px;
+            padding: 13px 15px;
+
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+
+            font-size: 15px;
+            outline: none;
+        }
+
+        .outils-produits input:focus,
+        .outils-produits select:focus {
+            border-color: var(--couleur-principale);
+        }
+
+        .grille-produits {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .produit {
+            position: relative;
+            overflow: hidden;
+
+            border-radius: 20px;
+            background-color: white;
+            box-shadow: var(--ombre);
+
+            transition: 0.3s;
+        }
+
+        .produit:hover {
+            transform: translateY(-8px);
+        }
+
+        .badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+
+            padding: 7px 11px;
+            border-radius: 20px;
+
+            background-color: var(--couleur-rouge);
+            color: white;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .image-produit {
+            height: 220px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(135deg, #ede9fe, #fce7f3);
+            font-size: 90px;
+        }
+
+        .informations-produit {
+            padding: 22px;
+        }
+
+        .categorie-produit {
+            margin-bottom: 8px;
+            color: var(--couleur-principale);
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .nom-produit {
+            min-height: 50px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .description-produit {
+            min-height: 58px;
+            margin-bottom: 15px;
+            color: var(--couleur-grise);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .prix-produit {
+            margin-bottom: 15px;
+            color: var(--couleur-secondaire);
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .ancien-prix {
+            margin-left: 8px;
+            color: #94a3b8;
+            font-size: 15px;
+            text-decoration: line-through;
+        }
+
+        .bouton-ajouter {
+            width: 100%;
+            padding: 13px;
+
+            border: none;
+            border-radius: 10px;
+
+            background-color: var(--couleur-principale);
+            color: white;
+
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .bouton-ajouter:hover {
+            background-color: #5b21b6;
+        }
+
+        .aucun-produit {
+            grid-column: 1 / -1;
+            padding: 50px;
+            text-align: center;
+            color: var(--couleur-grise);
+        }
+
+        /* ===============================
+           6. PANIER LATÉRAL
+        =============================== */
+
+        .fond-panier {
+            position: fixed;
+            inset: 0;
+            z-index: 1999;
+
+            display: none;
+            background-color: rgba(0, 0, 0, 0.45);
+        }
+
+        .fond-panier.actif {
+            display: block;
+        }
+
+        .panier {
+            position: fixed;
+            top: 0;
+            right: -430px;
+            z-index: 2000;
+
+            width: 420px;
+            max-width: 100%;
+            height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+
+            background-color: white;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.18);
+
+            transition: right 0.35s ease;
+        }
+
+        .panier.ouvert {
+            right: 0;
+        }
+
+        .entete-panier {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 22px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .fermer-panier {
+            width: 38px;
+            height: 38px;
+
+            border: none;
+            border-radius: 50%;
+
+            background-color: #f1f5f9;
+            font-size: 20px;
+        }
+
+        .contenu-panier {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .panier-vide {
+            padding: 50px 10px;
+            text-align: center;
+            color: var(--couleur-grise);
+        }
+
+        .article-panier {
+            display: grid;
+            grid-template-columns: 65px 1fr auto;
+            gap: 12px;
+            align-items: center;
+
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .miniature-panier {
+            width: 65px;
+            height: 65px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ede9fe, #fce7f3);
+            font-size: 33px;
+        }
+
+        .details-article h4 {
+            margin-bottom: 6px;
+            font-size: 15px;
+        }
+
+        .details-article p {
+            margin-bottom: 8px;
+            color: var(--couleur-secondaire);
+            font-weight: bold;
+        }
+
+        .controle-quantite {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .controle-quantite button {
+            width: 27px;
+            height: 27px;
+
+            border: none;
+            border-radius: 6px;
+
+            background-color: #ede9fe;
+            color: var(--couleur-principale);
+            font-weight: bold;
+        }
+
+        .supprimer-article {
+            border: none;
+            background: transparent;
+            color: var(--couleur-rouge);
+            font-size: 20px;
+        }
+
+        .pied-panier {
+            padding: 22px;
+            border-top: 1px solid #e2e8f0;
+            background-color: white;
+        }
+
+        .ligne-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 18px;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .bouton-commander {
+            width: 100%;
+            padding: 15px;
+
+            border: none;
+            border-radius: 12px;
+
+            background-color: var(--couleur-verte);
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* ===============================
+           7. CONTACT
+        =============================== */
+
+        .section-contact {
+            padding: 70px 7%;
+            color: white;
+            background-color: var(--couleur-foncee);
+        }
+
+        .formulaire-contact {
+            max-width: 650px;
+            margin: 30px auto 0;
+
+            display: grid;
+            gap: 15px;
+        }
+
+        .formulaire-contact input,
+        .formulaire-contact textarea {
+            width: 100%;
+            padding: 15px;
+
+            border: 1px solid #475569;
+            border-radius: 10px;
+
+            background-color: #334155;
+            color: white;
+
+            font-size: 15px;
+            outline: none;
+        }
+
+        .formulaire-contact textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .formulaire-contact button {
+            padding: 15px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: linear-gradient(
+                135deg,
+                var(--couleur-principale),
+                var(--couleur-secondaire)
+            );
+
+            color: white;
+            font-weight: bold;
+        }
+
+        /* ===============================
+           8. PIED DE PAGE
+        =============================== */
+
+        footer {
+            padding: 25px 7%;
+            background-color: #111827;
+            color: #cbd5e1;
+            text-align: center;
+        }
+
+        /* ===============================
+           9. NOTIFICATION
+        =============================== */
+
+        .notification {
+            position: fixed;
+            left: 50%;
+            bottom: -100px;
+            z-index: 3000;
+
+            padding: 15px 22px;
+            border-radius: 12px;
+
+            background-color: var(--couleur-verte);
+            color: white;
+
+            font-weight: bold;
+            box-shadow: var(--ombre);
+
+            transform: translateX(-50%);
+            transition: bottom 0.4s;
+        }
+
+        .notification.visible {
+            bottom: 30px;
+        }
+
+        /* ===============================
+           10. RESPONSIVE
+        =============================== */
+
+        @media (max-width: 1050px) {
+            .grille-produits {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 800px) {
+            .liens-navigation a {
+                display: none;
+            }
+
+            .accueil {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .accueil-contenu p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .avantages {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .navigation {
+                padding: 15px 4%;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .bouton-panier {
+                padding: 10px 12px;
+            }
+
+            .accueil,
+            .section-produits,
+            .section-contact {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .illustration-accueil {
+                display: none;
+            }
+
+            .grille-produits {
+                grid-template-columns: 1fr;
+            }
+
+            .outils-produits input,
+            .outils-produits select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BARRE DE NAVIGATION -->
+    <nav class="navigation">
+        <div class="logo">
+            Malak<span>Shop</span>
+        </div>
+
+        <div class="liens-navigation">
+            <a href="#accueil">Accueil</a>
+            <a href="#produits">Produits</a>
+            <a href="#contact">Contact</a>
+
+            <button class="bouton-panier" onclick="ouvrirPanier()">
+                🛒 Panier
+                <span class="nombre-panier" id="nombre-panier">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ACCUEIL -->
+    <header class="accueil" id="accueil">
+        <div class="accueil-contenu">
+            <h1>Découvrez nos meilleurs produits</h1>
+
+            <p>
+                Bienvenue chez Malak Shop. Profitez de produits modernes,
+                de prix avantageux et d’une expérience d’achat simple.
+            </p>
+
+            <a href="#produits" class="bouton-principal">
+                Voir les produits
+            </a>
+        </div>
+
+        <div class="illustration-accueil">
+            <div class="carte-promotion">
+                <div class="icone-promotion">🛍️</div>
+
+                <h2>Promotion spéciale</h2>
+
+                <p>
+                    Jusqu’à 30 % de réduction sur une sélection de produits.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- AVANTAGES -->
+    <section class="avantages">
+        <div class="avantage">
+            <span class="icone">🚚</span>
+            <h3>Livraison rapide</h3>
+            <p>Livraison de votre commande dans les meilleurs délais.</p>
+        </div>
+
+        <div class="avantage">
+            <span class="icone">🔒</span>
+            <h3>Paiement sécurisé</h3>
+            <p>Vos informations personnelles sont protégées.</p>
+        </div>
+
+        <div class="avantage">
+            <span class="icone">📞</span>
+            <h3>Service client</h3>
+            <p>Une assistance disponible pour répondre à vos questions.</p>
+        </div>
+    </section>
+
+    <!-- PRODUITS -->
+    <main class="section-produits" id="produits">
+        <h2 class="titre-section">Nos produits</h2>
+
+        <p class="description-section">
+            Recherchez un produit et ajoutez-le directement à votre panier.
+        </p>
+
+        <div class="outils-produits">
+            <input
+                type="search"
+                id="recherche"
+                placeholder="Rechercher un produit..."
+                oninput="afficherProduits()"
+            >
+
+            <select id="categorie" onchange="afficherProduits()">
+                <option value="tous">Toutes les catégories</option>
+                <option value="mode">Mode</option>
+                <option value="technologie">Technologie</option>
+                <option value="beaute">Beauté</option>
+                <option value="maison">Maison</option>
+            </select>
+
+            <select id="tri" onchange="afficherProduits()">
+                <option value="normal">Trier les produits</option>
+                <option value="prix-croissant">Prix croissant</option>
+                <option value="prix-decroissant">Prix décroissant</option>
+                <option value="nom">Nom de A à Z</option>
+            </select>
+        </div>
+
+        <div class="grille-produits" id="grille-produits">
+            <!-- Les produits seront ajoutés avec JavaScript -->
+        </div>
+    </main>
+
+    <!-- CONTACT -->
+    <section class="section-contact" id="contact">
+        <h2 class="titre-section">Contactez-nous</h2>
+
+        <p class="description-section">
+            Vous avez une question ? Envoyez-nous un message.
+        </p>
+
+        <form
+            class="formulaire-contact"
+            onsubmit="envoyerMessage(event)"
+        >
+            <input
+                type="text"
+                placeholder="Votre nom"
+                required
+            >
+
+            <input
+                type="email"
+                placeholder="Votre adresse e-mail"
+                required
+            >
+
+            <textarea
+                placeholder="Écrivez votre message..."
+                required
+            ></textarea>
+
+            <button type="submit">
+                Envoyer le message
+            </button>
+        </form>
+    </section>
+
+    <!-- PIED DE PAGE -->
+    <footer>
+        <p>
+            © 2026 Malak Shop - Tous droits réservés
+        </p>
+    </footer>
+
+    <!-- FOND SOMBRE DU PANIER -->
+    <div
+        class="fond-panier"
+        id="fond-panier"
+        onclick="fermerPanier()"
+    ></div>
+
+    <!-- PANIER LATÉRAL -->
+    <aside class="panier" id="panier">
+        <div class="entete-panier">
+            <h2>Votre panier</h2>
+
+            <button
+                class="fermer-panier"
+                onclick="fermerPanier()"
+            >
+                ✕
+            </button>
+        </div>
+
+        <div class="contenu-panier" id="contenu-panier">
+            <!-- Les articles seront ajoutés avec JavaScript -->
+        </div>
+
+        <div class="pied-panier">
+            <div class="ligne-total">
+                <span>Total :</span>
+                <span id="prix-total">0,00 DH</span>
+            </div>
+
+            <button
+                class="bouton-commander"
+                onclick="validerCommande()"
+            >
+                Valider la commande
+            </button>
+        </div>
+    </aside>
+
+    <!-- NOTIFICATION -->
+    <div class="notification" id="notification">
+        Produit ajouté au panier
+    </div>
+
+    <script>
+        /* ===============================
+           1. LISTE DES PRODUITS
+        =============================== */
+
+        const produits = [
+            {
+                id: 1,
+                nom: "Sac à main élégant",
+                categorie: "mode",
+                prix: 299,
+                ancienPrix: 399,
+                emoji: "👜",
+                badge: "-25 %",
+                description: "Un sac élégant et pratique pour toutes les occasions."
+            },
+            {
+                id: 2,
+                nom: "Montre connectée",
+                categorie: "technologie",
+                prix: 449,
+                ancienPrix: 599,
+                emoji: "⌚",
+                badge: "Promo",
+                description: "Suivez vos activités, vos notifications et votre santé."
+            },
+            {
+                id: 3,
+                nom: "Parfum floral",
+                categorie: "beaute",
+                prix: 219,
+                ancienPrix: 0,
+                emoji: "🌸",
+                badge: "Nouveau",
+                description: "Un parfum doux avec une agréable fragrance florale."
+            },
+            {
+                id: 4,
+                nom: "Casque sans fil",
+                categorie: "technologie",
+                prix: 349,
+                ancienPrix: 429,
+                emoji: "🎧",
+                badge: "-19 %",
+                description: "Une bonne qualité sonore avec une connexion Bluetooth."
+            },
+            {
+                id: 5,
+                nom: "Chaussures modernes",
+                categorie: "mode",
+                prix: 379,
+                ancienPrix: 0,
+                emoji: "👟",
+                badge: "Populaire",
+                description: "Des chaussures confortables pour vos activités quotidiennes."
+            },
+            {
+                id: 6,
+                nom: "Kit de maquillage",
+                categorie: "beaute",
+                prix: 189,
+                ancienPrix: 249,
+                emoji: "💄",
+                badge: "-24 %",
+                description: "Un kit complet pour réaliser un maquillage professionnel."
+            },
+            {
+                id: 7,
+                nom: "Lampe décorative",
+                categorie: "maison",
+                prix: 159,
+                ancienPrix: 0,
+                emoji: "💡",
+                badge: "Nouveau",
+                description: "Une lampe moderne qui apporte une ambiance chaleureuse."
+            },
+            {
+                id: 8,
+                nom: "Machine à café",
+                categorie: "maison",
+                prix: 699,
+                ancienPrix: 799,
+                emoji: "☕",
+                badge: "-13 %",
+                description: "Préparez facilement un excellent café à la maison."
+            }
+        ];
+
+        /* Le panier est initialement vide */
+        let panier = [];
+
+        /* ===============================
+           2. AFFICHER LES PRODUITS
+        =============================== */
+
+        function afficherProduits() {
+            const grille = document.getElementById("grille-produits");
+
+            const recherche = document
+                .getElementById("recherche")
+                .value
+                .toLowerCase();
+
+            const categorieChoisie = document
+                .getElementById("categorie")
+                .value;
+
+            const typeTri = document
+                .getElementById("tri")
+                .value;
+
+            let produitsFiltres = produits.filter(function(produit) {
+                const correspondRecherche = produit.nom
+                    .toLowerCase()
+                    .includes(recherche);
+
+                const correspondCategorie =
+                    categorieChoisie === "tous" ||
+                    produit.categorie === categorieChoisie;
+
+                return correspondRecherche && correspondCategorie;
+            });
+
+            /* Trier les produits */
+            if (typeTri === "prix-croissant") {
+                produitsFiltres.sort(function(a, b) {
+                    return a.prix - b.prix;
+                });
+            }
+
+            if (typeTri === "prix-decroissant") {
+                produitsFiltres.sort(function(a, b) {
+                    return b.prix - a.prix;
+                });
+            }
+
+            if (typeTri === "nom") {
+                produitsFiltres.sort(function(a, b) {
+                    return a.nom.localeCompare(b.nom);
+                });
+            }
+
+            /* Si aucun produit n'est trouvé */
+            if (produitsFiltres.length === 0) {
+                grille.innerHTML = `
+                    <div class="aucun-produit">
+                        <h3>Aucun produit trouvé</h3>
+                        <p>Essayez une autre recherche ou catégorie.</p>
+                    </div>
+                `;
+
+                return;
+            }
+
+            /* Création des cartes de produits */
+            grille.innerHTML = produitsFiltres
+                .map(function(produit) {
+                    const ancienPrix = produit.ancienPrix > 0
+                        ? `
+                            <span class="ancien-prix">
+                                ${formatPrix(produit.ancienPrix)}
+                            </span>
+                        `
+                        : "";
+
+                    return `
+                        <article class="produit">
+                            <span class="badge">
+                                ${produit.badge}
+                            </span>
+
+                            <div class="image-produit">
+                                ${produit.emoji}
+                            </div>
+
+                            <div class="informations-produit">
+                                <p class="categorie-produit">
+                                    ${produit.categorie}
+                                </p>
+
+                                <h3 class="nom-produit">
+                                    ${produit.nom}
+                                </h3>
+
+                                <p class="description-produit">
+                                    ${produit.description}
+                                </p>
+
+                                <p class="prix-produit">
+                                    ${formatPrix(produit.prix)}
+                                    ${ancienPrix}
+                                </p>
+
+                                <button
+                                    class="bouton-ajouter"
+                                    onclick="ajouterAuPanier(${produit.id})"
+                                >
+                                    Ajouter au panier
+                                </button>
+                            </div>
+                        </article>
+                    `;
+                })
+                .join("");
+        }
+
+        /* ===============================
+           3. AJOUTER AU PANIER
+        =============================== */
+
+        function ajouterAuPanier(idProduit) {
+            const produitChoisi = produits.find(function(produit) {
+                return produit.id === idProduit;
+            });
+
+            const produitDansPanier = panier.find(function(article) {
+                return article.id === idProduit;
+            });
+
+            if (produitDansPanier) {
+                produitDansPanier.quantite += 1;
+            } else {
+                panier.push({
+                    ...produitChoisi,
+                    quantite: 1
+                });
+            }
+
+            mettreAJourPanier();
+            afficherNotification("Produit ajouté au panier");
+        }
+
+        /* ===============================
+           4. MODIFIER LA QUANTITÉ
+        =============================== */
+
+        function modifierQuantite(idProduit, changement) {
+            const article = panier.find(function(produit) {
+                return produit.id === idProduit;
+            });
+
+            if (!article) {
+                return;
+            }
+
+            article.quantite += changement;
+
+            if (article.quantite <= 0) {
+                supprimerDuPanier(idProduit);
+                return;
+            }
+
+            mettreAJourPanier();
+        }
+
+        /* ===============================
+           5. SUPPRIMER DU PANIER
+        =============================== */
+
+        function supprimerDuPanier(idProduit) {
+            panier = panier.filter(function(produit) {
+                return produit.id !== idProduit;
+            });
+
+            mettreAJourPanier();
+            afficherNotification("Produit supprimé du panier");
+        }
+
+        /* ===============================
+           6. METTRE À JOUR LE PANIER
+        =============================== */
+
+        function mettreAJourPanier() {
+            const contenuPanier =
+                document.getElementById("contenu-panier");
+
+            const nombrePanier =
+                document.getElementById("nombre-panier");
+
+            const prixTotal =
+                document.getElementById("prix-total");
+
+            const nombreArticles = panier.reduce(
+                function(total, article) {
+                    return total + article.quantite;
+                },
+                0
+            );
+
+            const totalCommande = panier.reduce(
+                function(total, article) {
+                    return total + article.prix * article.quantite;
+                },
+                0
+            );
+
+            nombrePanier.textContent = nombreArticles;
+            prixTotal.textContent = formatPrix(totalCommande);
+
+            if (panier.length === 0) {
+                contenuPanier.innerHTML = `
+                    <div class="panier-vide">
+                        <div style="font-size: 60px; margin-bottom: 15px;">
+                            🛒
+                        </div>
+
+                        <h3>Votre panier est vide</h3>
+
+                        <p style="margin-top: 10px;">
+                            Ajoutez un produit pour commencer.
+                        </p>
+                    </div>
+                `;
+
+                return;
+            }
+
+            contenuPanier.innerHTML = panier
+                .map(function(article) {
+                    return `
+                        <div class="article-panier">
+                            <div class="miniature-panier">
+                                ${article.emoji}
+                            </div>
+
+                            <div class="details-article">
+                                <h4>${article.nom}</h4>
+
+                                <p>
+                                    ${formatPrix(article.prix)}
+                                </p>
+
+                                <div class="controle-quantite">
+                                    <button
+                                        onclick="modifierQuantite(
+                                            ${article.id},
+                                            -1
+                                        )"
+                                    >
+                                        −
+                                    </button>
+
+                                    <span>${article.quantite}</span>
+
+                                    <button
+                                        onclick="modifierQuantite(
+                                            ${article.id},
+                                            1
+                                        )"
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button
+                                class="supprimer-article"
+                                onclick="supprimerDuPanier(${article.id})"
+                                title="Supprimer"
+                            >
+                                🗑️
+                            </button>
+                        </div>
+                    `;
+                })
+                .join("");
+        }
+
+        /* ===============================
+           7. OUVRIR ET FERMER LE PANIER
+        =============================== */
+
+        function ouvrirPanier() {
+            document
+                .getElementById("panier")
+                .classList
+                .add("ouvert");
+
+            document
+                .getElementById("fond-panier")
+                .classList
+                .add("actif");
+        }
+
+        function fermerPanier() {
+            document
+                .getElementById("panier")
+                .classList
+                .remove("ouvert");
+
+            document
+                .getElementById("fond-panier")
+                .classList
+                .remove("actif");
+        }
+
+        /* ===============================
+           8. VALIDER LA COMMANDE
+        =============================== */
+
+        function validerCommande() {
+            if (panier.length === 0) {
+                afficherNotification(
+                    "Ajoutez d'abord un produit au panier"
+                );
+
+                return;
+            }
+
+            const total = panier.reduce(
+                function(somme, article) {
+                    return somme + article.prix * article.quantite;
+                },
+                0
+            );
+
+            alert(
+                "Commande validée avec succès !\n\n" +
+                "Total : " + formatPrix(total) + "\n\n" +
+                "Ceci est une démonstration. " +
+                "Aucun paiement réel n'a été effectué."
+            );
+
+            panier = [];
+            mettreAJourPanier();
+            fermerPanier();
+        }
+
+        /* ===============================
+           9. FORMULAIRE DE CONTACT
+        =============================== */
+
+        function envoyerMessage(evenement) {
+            evenement.preventDefault();
+
+            afficherNotification("Votre message a été envoyé");
+
+            evenement.target.reset();
+        }
+
+        /* ===============================
+           10. NOTIFICATION
+        =============================== */
+
+        function afficherNotification(message) {
+            const notification =
+                document.getElementById("notification");
+
+            notification.textContent = message;
+            notification.classList.add("visible");
+
+            setTimeout(function() {
+                notification.classList.remove("visible");
+            }, 2500);
+        }
+
+        /* ===============================
+           11. FORMATER LE PRIX
+        =============================== */
+
+        function formatPrix(prix) {
+            return prix.toLocaleString("fr-FR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }) + " DH";
+        }
+
+        /* ===============================
+           12. LANCEMENT DU SITE
+        =============================== */
+
+        afficherProduits();
+        mettreAJourPanier();
+    </script>
+
+</body>
+</html>
