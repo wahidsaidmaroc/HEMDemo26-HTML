@@ -1,150 +1,146 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestion du personnel</title>
 
     <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #eef1f5;
+        margin: 0;
+        padding: 30px;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: auto;
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+      }
+
+      h1 {
+        color: #183b56;
+        text-align: center;
+      }
+
+      p {
+        color: #666;
+        text-align: center;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 25px 0;
+      }
+
+      .btn {
+        background-color: #183b56;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 14px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #183b56;
+        color: white;
+      }
+
+      tr:hover {
+        background-color: #f2f5f8;
+      }
+
+      .status {
+        color: green;
+        font-weight: bold;
+      }
+
+      @media (max-width: 600px) {
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-            margin: 0;
-            padding: 30px;
+          padding: 10px;
         }
 
         .container {
-            max-width: 1000px;
-            margin: auto;
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-        }
-
-        h1 {
-            color: #183b56;
-            text-align: center;
-        }
-
-        p {
-            color: #666;
-            text-align: center;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 25px 0;
-        }
-
-        .btn {
-            background-color: #183b56;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+          padding: 12px;
+          overflow-x: auto;
         }
 
         table {
-            width: 100%;
-            border-collapse: collapse;
+          min-width: 600px;
         }
-
-        th, td {
-            padding: 14px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #183b56;
-            color: white;
-        }
-
-        tr:hover {
-            background-color: #f2f5f8;
-        }
-
-        .status {
-            color: green;
-            font-weight: bold;
-        }
-
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-
-            .container {
-                padding: 12px;
-                overflow-x: auto;
-            }
-
-            table {
-                min-width: 600px;
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <div class="container">
+      <h1>Gestion du personnel</h1>
+      <p>Bienvenue dans l'espace de gestion des employés</p>
 
-        <h1>Gestion du personnel</h1>
-        <p>Bienvenue dans l'espace de gestion des employés</p>
+      <div class="header">
+        <h2>Liste du personnel</h2>
+        <button class="btn">+ Ajouter un employé</button>
+      </div>
 
-        <div class="header">
-            <h2>Liste du personnel</h2>
-            <button class="btn">+ Ajouter un employé</button>
-        </div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom complet</th>
+            <th>Poste</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nom complet</th>
-                    <th>Poste</th>
-                    <th>Email</th>
-                    <th>Téléphone</th>
-                    <th>Statut</th>
-                </tr>
-            </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Sara Benali</td>
+            <td>Responsable RH</td>
+            <td>sara@email.com</td>
+            <td>0612345678</td>
+            <td class="status">Actif</td>
+          </tr>
 
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Sara Benali</td>
-                    <td>Responsable RH</td>
-                    <td>sara@email.com</td>
-                    <td>0612345678</td>
-                    <td class="status">Actif</td>
-                </tr>
+          <tr>
+            <td>2</td>
+            <td>Youssef Amrani</td>
+            <td>Développeur</td>
+            <td>youssef@email.com</td>
+            <td>0623456789</td>
+            <td class="status">Actif</td>
+          </tr>
 
-                <tr>
-                    <td>2</td>
-                    <td>Youssef Amrani</td>
-                    <td>Développeur</td>
-                    <td>youssef@email.com</td>
-                    <td>0623456789</td>
-                    <td class="status">Actif</td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>Imane Alaoui</td>
-                    <td>Comptable</td>
-                    <td>imane@email.com</td>
-                    <td>0634567890</td>
-                    <td class="status">Actif</td>
-                </tr>
-            </tbody>
-        </table>
-
+          <tr>
+            <td>3</td>
+            <td>Imane Alaoui</td>
+            <td>Comptable</td>
+            <td>imane@email.com</td>
+            <td>0634567890</td>
+            <td class="status">Actif</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-</body>
+  </body>
 </html>
