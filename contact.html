@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajout de contact</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+
+            margin-bottom: 25px;
+            color: #1a237e;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #1a237e;
+        }
+
+        .formulaire {
+            background: #f0f2ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .ligne {
+            display: flex;
+            gap: 20px;
+        }
+
+        .champ {
+            flex: 1;
+            margin-bottom: 15px;
+        }
+
+        .champ label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+
+        .champ label span {
+            color: #d32f2f;
+        }
+
+        .champ input,
+        .champ select,
+        .champ textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .champ input:focus,
+        .champ select:focus,
+        .champ textarea:focus {
+            outline: none;
+            border-color: #1976d2;
+        }
+
+        .champ textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .boutons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+
+            margin-top: 10px;
+        }
+
+        .bouton {
+            padding: 12px 25px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .bouton:hover {
+            background: #3949ab;
+        }
+
+        .bouton.secondaire {
+            background: #ddd;
+            color: #333;
+        }
+
+        .bouton.secondaire:hover {
+            background: #ccc;
+        }
+
+        .message {
+            display: none;
+            text-align: center;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+
+            background: #e8f5e9;
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        th {
+            background: #f0f2ff;
+            color: #1a237e;
+        }
+
+        .vide {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+        }
+
+        .supprimer {
+            background: none;
+            border: none;
+            color: #d32f2f;
+
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 18px;
+            }
+
+            .ligne {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            th, td {
+                font-size: 12px;
+                padding: 6px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Ajout de contact</h1>
+
+
+        <div class="message" id="message">Contact ajouté avec succès !</div>
+
+        <form class="formulaire" id="formContact">
+
+            <div class="ligne">
+                <div class="champ">
+                    <label for="nom">Nom <span>*</span></label>
+                    <input type="text" id="nom" placeholder="Ex : Alaoui" required>
+                </div>
+                <div class="champ">
+                    <label for="prenom">Prénom <span>*</span></label>
+                    <input type="text" id="prenom" placeholder="Ex : Mehdi" required>
+                </div>
+            </div>
+
+            <div class="ligne">
+                <div class="champ">
+                    <label for="email">Email <span>*</span></label>
+                    <input type="email" id="email" placeholder="exemple@email.com" required>
+                </div>
+                <div class="champ">
+                    <label for="telephone">Téléphone <span>*</span></label>
+                    <input type="tel" id="telephone" placeholder="06 12 34 56 78" pattern="0[5-7][0-9 ]{8,11}" required>
+                </div>
+            </div>
+
+            <div class="ligne">
+                <div class="champ">
+                    <label for="ville">Ville</label>
+                    <input type="text" id="ville" placeholder="Ex : Casablanca">
+                </div>
+                <div class="champ">
+
+                    <label for="categorie">Catégorie</label>
+                    <select id="categorie">
+                        <option value="Client">Client</option>
+                        <option value="Fournisseur">Fournisseur</option>
+                        <option value="Partenaire">Partenaire</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="champ">
+                <label for="notes">Notes</label>
+                <textarea id="notes" placeholder="Informations complémentaires..."></textarea>
+            </div>
+
+            <div class="boutons">
+                <button type="submit" class="bouton">Ajouter le contact</button>
+                <button type="reset" class="bouton secondaire">Effacer</button>
+            </div>
+
+        </form>
+
+        <h2>Liste des contacts</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Téléphone</th>
+                    <th>Ville</th>
+                    <th>Catégorie</th>
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="listeContacts">
+                <tr><td colspan="6" class="vide">Aucun contact pour le moment</td></tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <script>
+        let contacts = [];
+
+        const form = document.getElementById("formContact");
+        const liste = document.getElementById("listeContacts");
+        const message = document.getElementById("message");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const contact = {
+                nom: document.getElementById("nom").value.trim(),
+                prenom: document.getElementById("prenom").value.trim(),
+                email: document.getElementById("email").value.trim(),
+                telephone: document.getElementById("telephone").value.trim(),
+                ville: document.getElementById("ville").value.trim(),
+                categorie: document.getElementById("categorie").value
+            };
+
+            contacts.push(contact);
+            afficherContacts();
+            form.reset();
+
+
+            message.style.display = "block";
+            setTimeout(function () {
+                message.style.display = "none";
+            }, 2500);
+        });
+
+        function afficherContacts() {
+            liste.innerHTML = "";
+
+            if (contacts.length === 0) {
+                liste.innerHTML = '<tr><td colspan="6" class="vide">Aucun contact pour le moment</td></tr>';
+                return;
+            }
+
+            contacts.forEach(function (c, index) {
+                const ligne = document.createElement("tr");
+                ligne.innerHTML =
+                    "<td>" + c.prenom + " " + c.nom + "</td>" +
+                    "<td>" + c.email + "</td>" +
+                    "<td>" + c.telephone + "</td>" +
+                    "<td>" + (c.ville || "-") + "</td>" +
+                    "<td>" + c.categorie + "</td>" +
+                    '<td><button class="supprimer" onclick="supprimerContact(' + index + ')">Supprimer</button></td>';
+                liste.appendChild(ligne);
+            });
+        }
+
+        function supprimerContact(index) {
+            contacts.splice(index, 1);
+            afficherContacts();
+        }
+
+    </script>
+
+</body>
+</html>

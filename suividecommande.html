@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi de commande</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #1a237e;
+        }
+
+        .commande {
+            background: #f0f2ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .commande p {
+            margin: 10px 0;
+        }
+
+        .statut {
+            color: #1976d2;
+            font-weight: bold;
+        }
+
+        .progression {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 50px 0;
+        }
+
+        .progression::before {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #ddd;
+            z-index: 0;
+        }
+
+        .etape {
+            text-align: center;
+            width: 25%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cercle {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #ddd;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .etape.active .cercle {
+            background: #1976d2;
+        }
+
+        .etape p {
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        .details {
+            margin-top: 35px;
+        }
+
+        .details h2 {
+            margin-bottom: 15px;
+            color: #1a237e;
+        }
+
+        .details p {
+            margin: 10px 0;
+        }
+
+        .bouton {
+            display: block;
+            margin: 30px auto 0;
+            padding: 12px 25px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .bouton:hover {
+            background: #3949ab;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 18px;
+            }
+
+            .etape p {
+                font-size: 10px;
+            }
+
+            .cercle {
+                width: 32px;
+                height: 32px;
+            }
+
+            .progression::before {
+                top: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Suivi de commande</h1>
+
+        <div class="commande">
+            <p><strong>Commande :</strong> #CMD2026001</p>
+            <p><strong>Client :</strong> Mehdi</p>
+            <p><strong>Date :</strong> 15/11/2026</p>
+            <p><strong>Statut :</strong> <span class="statut">En cours de livraison</span></p>
+            <p><strong>Livraison estimée :</strong> 20/11/2026</p>
+        </div>
+
+        <div class="progression">
+
+            <div class="etape active">
+                <div class="cercle">1</div>
+                <p>Commande passée</p>
+            </div>
+
+            <div class="etape active">
+                <div class="cercle">2</div>
+                <p>Préparation</p>
+            </div>
+
+            <div class="etape active">
+                <div class="cercle">3</div>
+                <p>Expédition</p>
+            </div>
+
+            <div class="etape">
+                <div class="cercle">4</div>
+                <p>Livrée</p>
+            </div>
+
+        </div>
+
+        <div class="details">
+            <h2>Détails de la commande</h2>
+
+            <p><strong>Produit :</strong> Ordinateur portable</p>
+            <p><strong>Quantité :</strong> 1</p>
+            <p><strong>Prix :</strong> 7 999 DH</p>
+            <p><strong>Adresse :</strong> Casablanca, Maroc</p>
+            <p><strong>Mode de livraison :</strong> Livraison à domicile</p>
+        </div>
+
+        <button class="bouton" onclick="window.print()">
+            Imprimer le suivi
+        </button>
+
+    </div>
+
+</body>
+</html>
