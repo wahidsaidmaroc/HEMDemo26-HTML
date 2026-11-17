@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Board</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f6fb;
+    color: #202938;
+    padding: 35px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+header p {
+    color: #7b8495;
+    margin-top: 8px;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 12px 18px;
+    font-weight: bold;
+}
+
+.add-btn {
+    background: #5146e5;
+    color: white;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    align-items: start;
+}
+
+.column {
+    background: #e9edf5;
+    padding: 18px;
+    border-radius: 12px;
+    min-height: 400px;
+}
+
+.column-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.column-header h2 {
+    font-size: 17px;
+}
+
+.count {
+    background: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+.task-list {
+    min-height: 300px;
+}
+
+.task {
+    background: white;
+    padding: 17px;
+    border-radius: 10px;
+    margin-bottom: 13px;
+    cursor: grab;
+    box-shadow: 0 2px 6px #00000008;
+}
+
+.task h3 {
+    font-size: 15px;
+    margin-bottom: 9px;
+}
+
+.task p {
+    color: #7b8495;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.task-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #7b8495;
+}
+
+.priority {
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+}
+
+.high { background: #ffe2e2; color: #d43b3b; }
+.medium { background: #fff0d1; color: #b87913; }
+.low { background: #dff5e8; color: #25834e; }
+
+.delete-btn {
+    background: transparent;
+    color: #dc4545;
+    padding: 3px 6px;
+}
+
+.drag-over {
+    background: #dce2f5;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #0007;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    width: 100%;
+    max-width: 420px;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    margin-bottom: 15px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.cancel-btn {
+    background: #e9edf5;
+}
+
+@media(max-width: 800px) {
+    body { padding: 18px; }
+    .board { grid-template-columns: 1fr; }
+    header { gap: 15px; align-items: flex-start; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div>
+        <h1>My Task Board</h1>
+        <p>Organisez votre travail et suivez votre progression.</p>
+    </div>
+    <button class="add-btn" onclick="openModal()">
+        + Nouvelle tâche
+    </button>
+</header>
+
+<main class="board">
+
+    <section class="column" data-status="todo">
+        <div class="column-header">
+            <h2>📋 À faire</h2>
+            <span class="count">0</span>
+        </div>
+        <div class="task-list" id="todo"></div>
+    </section>
+
+    <section class="column" data-status="progress">
+        <div class="column-header">
+            <h2>⚡ En cours</h2>
+            <span class="count">0</span>
+        </div>
+        <div class="task-list" id="progress"></div>
+    </section>
+
+    <section class="column" data-status="done">
+        <div class="column-header">
+            <h2>✅ Terminé</h2>
+            <span class="count">0</span>
+        </div>
+        <div class="task-list" id="done"></div>
+    </section>
+
+</main>
+
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <h2>Créer une tâche</h2>
+
+        <input type="text" id="title"
+               placeholder="Titre de la tâche">
+
+        <textarea id="description"
+                  placeholder="Description..."
+                  rows="3"></textarea>
+
+        <select id="priority">
+            <option value="low">Priorité basse</option>
+            <option value="medium">Priorité moyenne</option>
+            <option value="high">Priorité haute</option>
+        </select>
+
+        <input type="date" id="date">
+
+        <div class="modal-actions">
+            <button class="cancel-btn" onclick="closeModal()">
+                Annuler
+            </button>
+            <button class="add-btn" onclick="addTask()">
+                Ajouter
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function openModal() {
+    document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
+function addTask() {
+    const title = document.getElementById("title").value.trim();
+
+    if (!title) {
+        alert("Veuillez saisir un titre !");
+        return;
+    }
+
+    const task = {
+        id: Date.now(),
+        title: title,
+        description: document.getElementById("description").value,
+        priority: document.getElementById("priority").value,
+        date: document.getElementById("date").value,
+        status: "todo"
+    };
+
+    tasks.push(task);
+    saveTasks();
+    renderTasks();
+    closeModal();
+
+    document.getElementById("title").value = "";
+    document.getElementById("description").value = "";
+    document.getElementById("priority").value = "low";
+    document.getElementById("date").value = "";
+}
+
+function deleteTask(id) {
+    tasks = tasks.filter(task => task.id !== id);
+    saveTasks();
+    renderTasks();
+}
+
+function renderTasks() {
+    ["todo", "progress", "done"].forEach(status => {
+        document.getElementById(status).innerHTML = "";
+    });
+
+    tasks.forEach(task => {
+        const card = document.createElement("div");
+        card.className = "task";
+        card.draggable = true;
+
+        const title = document.createElement("h3");
+        title.textContent = task.title;
+
+        const description = document.createElement("p");
+        description.textContent = task.description || "Aucune description";
+
+        const footer = document.createElement("div");
+        footer.className = "task-footer";
+
+        const priority = document.createElement("span");
+        priority.className = "priority " + task.priority;
+        priority.textContent = {
+            high: "Haute",
+            medium: "Moyenne",
+            low: "Basse"
+        }[task.priority];
+
+        const date = document.createElement("span");
+        date.textContent = task.date || "Sans échéance";
+
+        const remove = document.createElement("button");
+        remove.className = "delete-btn";
+        remove.textContent = "✕";
+        remove.onclick = () => deleteTask(task.id);
+
+        footer.append(priority, date, remove);
+        card.append(title, description, footer);
+
+        card.addEventListener("dragstart", () => {
+            card.dataset.id = task.id;
+            window.draggedTask = task.id;
+        });
+
+        document.getElementById(task.status).appendChild(card);
+    });
+
+    document.querySelectorAll(".column").forEach(column => {
+        const status = column.dataset.status;
+        column.querySelector(".count").textContent =
+            tasks.filter(task => task.status === status).length;
+    });
+}
+
+// Glisser-déposer
+document.querySelectorAll(".column").forEach(column => {
+
+    column.addEventListener("dragover", event => {
+        event.preventDefault();
+        column.classList.add("drag-over");
+    });
+
+    column.addEventListener("dragleave", () => {
+        column.classList.remove("drag-over");
+    });
+
+    column.addEventListener("drop", event => {
+        event.preventDefault();
+        column.classList.remove("drag-over");
+
+        const id = window.draggedTask;
+        const task = tasks.find(t => t.id == id);
+
+        if (task) {
+            task.status = column.dataset.status;
+            saveTasks();
+            renderTasks();
+        }
+    });
+});
+
+renderTasks();
+</script>
+
+</body>
+</html>
