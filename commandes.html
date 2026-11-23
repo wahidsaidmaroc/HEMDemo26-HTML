@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des commandes</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f5f9;
+        }
+
+        header {
+            background: #26354a;
+            color: white;
+            padding: 22px;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            margin: 30px auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #26354a;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat {
+            background: white;
+            padding: 20px;
+            flex: 1;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px #ddd;
+        }
+
+        .stat h3 {
+            color: #555;
+            font-size: 15px;
+        }
+
+        .stat p {
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #26354a;
+        }
+
+        .search {
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 12px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #26354a;
+            color: white;
+        }
+
+        select {
+            padding: 7px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .delete {
+            background: #dc3545;
+        }
+
+        .details {
+            background: #2878c7;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Gestion des commandes</h1>
+    <p>Espace Responsable des commandes</p>
+</header>
+
+<div class="container">
+
+    <h2>Tableau de bord</h2>
+
+    <div class="stats">
+        <div class="stat">
+            <h3>Total des commandes</h3>
+            <p id="total">4</p>
+        </div>
+
+        <div class="stat">
+            <h3>En attente</h3>
+            <p id="attente">2</p>
+        </div>
+
+        <div class="stat">
+            <h3>Commandes livrées</h3>
+            <p id="livrees">1</p>
+        </div>
+    </div>
+
+    <h2>Liste des commandes</h2>
+
+    <div class="search">
+        <input type="text" id="recherche"
+        placeholder="Rechercher une commande ou un client..."
+        onkeyup="rechercher()">
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>N° Commande</th>
+                <th>Client</th>
+                <th>Date</th>
+                <th>Montant</th>
+                <th>Statut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody id="listeCommandes">
+
+            <tr>
+                <td>#CMD001</td>
+                <td>Ahmed</td>
+                <td>15/11/2026</td>
+                <td>450 DH</td>
+                <td>
+                    <select onchange="actualiser()">
+                        <option>En attente</option>
+                        <option>Confirmée</option>
+                        <option>En préparation</option>
+                        <option>Expédiée</option>
+                        <option>Livrée</option>
+                        <option>Annulée</option>
+                    </select>
+                </td>
+                <td>
+                    <button class="details"
+                    onclick="voirDetails('#CMD001 - Ahmed - 450 DH')">
+                    Détails</button>
+                    <button class="delete"
+                    onclick="supprimer(this)">Supprimer</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td>#CMD002</td>
+                <td>Salma</td>
+                <td>15/11/2026</td>
+                <td>320 DH</td>
+                <td>
+                    <select onchange="actualiser()">
+                        <option>En attente</option>
+                        <option>Confirmée</option>
+                        <option>En préparation</option>
+                        <option>Expédiée</option>
+                        <option>Livrée</option>
+                        <option>Annulée</option>
+                    </select>
+                </td>
+                <td>
+                    <button class="details"
+                    onclick="voirDetails('#CMD002 - Salma - 320 DH')">
+                    Détails</button>
+                    <button class="delete"
+                    onclick="supprimer(this)">Supprimer</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td>#CMD003</td>
+                <td>Youssef</td>
+                <td>16/11/2026</td>
+                <td>600 DH</td>
+                <td>
+                    <select onchange="actualiser()">
+                        <option>En attente</option>
+                        <option>Confirmée</option>
+                        <option>En préparation</option>
+                        <option>Expédiée</option>
+                        <option selected>Livrée</option>
+                        <option>Annulée</option>
+                    </select>
+                </td>
+                <td>
+                    <button class="details"
+                    onclick="voirDetails('#CMD003 - Youssef - 600 DH')">
+                    Détails</button>
+                    <button class="delete"
+                    onclick="supprimer(this)">Supprimer</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td>#CMD004</td>
+                <td>Fatima</td>
+                <td>16/11/2026</td>
+                <td>250 DH</td>
+                <td>
+                    <select onchange="actualiser()">
+                        <option>En attente</option>
+                        <option selected>Confirmée</option>
+                        <option>En préparation</option>
+                        <option>Expédiée</option>
+                        <option>Livrée</option>
+                        <option>Annulée</option>
+                    </select>
+                </td>
+                <td>
+                    <button class="details"
+                    onclick="voirDetails('#CMD004 - Fatima - 250 DH')">
+                    Détails</button>
+                    <button class="delete"
+                    onclick="supprimer(this)">Supprimer</button>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+<footer>
+    © 2026 - Espace Responsable des commandes
+</footer>
+
+<script>
+
+function actualiser() {
+    let lignes = document.querySelectorAll("#listeCommandes tr");
+
+    let total = lignes.length;
+    let attente = 0;
+    let livrees = 0;
+
+    lignes.forEach(ligne => {
+        let statut = ligne.querySelector("select").value;
+
+        if (statut === "En attente") {
+            attente++;
+        }
+
+        if (statut === "Livrée") {
+            livrees++;
+        }
+    });
+
+    document.getElementById("total").textContent = total;
+    document.getElementById("attente").textContent = attente;
+    document.getElementById("livrees").textContent = livrees;
+}
+
+function rechercher() {
+    let recherche = document.getElementById("recherche")
+        .value.toLowerCase();
+
+    let lignes = document.querySelectorAll("#listeCommandes tr");
+
+    lignes.forEach(ligne => {
+        let texte = ligne.textContent.toLowerCase();
+
+        ligne.style.display = texte.includes(recherche)
+            ? "" : "none";
+    });
+}
+
+function supprimer(bouton) {
+    if (confirm("Voulez-vous supprimer cette commande ?")) {
+        bouton.closest("tr").remove();
+        actualiser();
+    }
+}
+
+function voirDetails(message) {
+    alert("Détails de la commande : " + message);
+}
+
+actualiser();
+
+</script>
+
+</body>
+</html>
